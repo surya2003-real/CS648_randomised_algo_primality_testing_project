@@ -8,12 +8,16 @@ def generate_prime_candidate(length):
     candidate |= (1 << (length - 1)) | 1  # Ensure MSB and LSB are set.
     return candidate
 
-def generate_prime(length, tester):
+def generate_prime(length, tester, algo="miller-rabin"):
     """Generate a prime number of the given bit length using Miller-Rabin test."""
     while True:
         candidate = generate_prime_candidate(length)
-        if tester.is_prime_miller_rabin(candidate):
-            return candidate
+        if algo == "sqrt":
+            if tester.is_prime_sqrt(candidate):
+                return candidate
+        elif algo == "miller-rabin":
+            if tester.is_prime_miller_rabin(candidate):
+                return candidate
 
 def egcd(a, b):
     """Extended Euclidean Algorithm."""
@@ -30,16 +34,18 @@ def modinv(a, m):
     return x % m
 
 class RSAKeyGenerator:
-    def __init__(self, bit_length=16, test_rounds=10):
+    def __init__(self, bit_length=16, test_rounds=10, algo="miller-rabin"):
+        """Initialize the RSA key generator with the given bit length and test rounds."""
         self.bit_length = bit_length
         self.tester = PrimalityTester(test_rounds=test_rounds)
         self.public_key = None
         self.private_key = None
+        self.algo = algo
 
     def generate_keys(self):
         """Generate RSA keys using two primes produced by Miller-Rabin."""
-        p = generate_prime(self.bit_length, self.tester)
-        q = generate_prime(self.bit_length, self.tester)
+        p = generate_prime(self.bit_length, self.tester, algo=self.algo)
+        q = generate_prime(self.bit_length, self.tester, algo=self.algo)
         n = p * q
         phi = (p - 1) * (q - 1)
         e = 65537  # Common public exponent

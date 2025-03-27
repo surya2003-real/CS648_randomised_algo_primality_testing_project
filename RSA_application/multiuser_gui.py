@@ -115,7 +115,7 @@ class MultiUserEncryptionApp(tk.Tk):
 
         self.status_label.config(text="Generating RSA keys for user...")
         self.update_idletasks()
-        rsa_gen = RSAKeyGenerator(bit_length=bit_length)
+        rsa_gen = RSAKeyGenerator(bit_length=bit_length, test_rounds=bit_length)
         public_key, private_key = rsa_gen.generate_keys()
 
         # Store public key (as a list for JSON compatibility).

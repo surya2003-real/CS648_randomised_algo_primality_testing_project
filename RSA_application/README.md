@@ -23,6 +23,7 @@ pip install -r requirements.txt
 To start the application, run the following command:
 
 ```sh
+cd RSA_application
 python multiuser_gui.py
 ```
 
