@@ -35,7 +35,7 @@ vector<int> count_valid_numbers(int limit) {
         if (is_prime[c]) continue; // Skip prime numbers
         int count = 0;
         for (int x = 2; x < c; ++x) {
-            if (mod_exp(x, c - 1, c) == 1) {
+            if (mod_exp(x, c - 1, c) != 1) {
                 ++count;
             }
         }

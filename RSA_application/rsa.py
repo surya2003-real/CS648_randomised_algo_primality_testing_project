@@ -18,6 +18,11 @@ def generate_prime(length, tester, algo="miller-rabin"):
         elif algo == "miller-rabin":
             if tester.is_prime_miller_rabin(candidate):
                 return candidate
+        elif algo == "aks":
+            if tester.is_prime_aks(candidate):
+                return candidate
+        else:
+            raise ValueError("Unknown algorithm specified.")
 
 def egcd(a, b):
     """Extended Euclidean Algorithm."""
